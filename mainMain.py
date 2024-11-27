@@ -68,7 +68,27 @@ class BillingSystem:
         add = tk.Button(buttonFrame, text="Add Item", bg="light green", borderwidth=0, fg="white", command=self.addOrder).pack(side="left", padx=5)
         delete = tk.Button(buttonFrame, text="Delete Item", bg="#FF4040", borderwidth=0, fg="white", command=self.deleteOrder).pack(side="left", padx=5)
 
-        
+        self.orderList = ttk.Treeview(self.root, columns=("items", "quantity", "price"), show="headings", height=10)
+        self.orderList.heading("items", text="ITEMS")
+        self.orderList.heading("quantity", text="QUANTITY")
+        self.orderList.heading("price", text="PRICE")
+        self.orderList.pack(pady=10)
+
+        totalFrame = tk.Frame(self.root)
+        totalFrame.pack(pady=5)
+
+        totalCost = tk.Label(totalFrame, text="Total:", font="Arial 12")
+        totalCost.grid(row=0, column=0, sticky='w', padx=5)
+        tk.Entry(totalFrame, textvariable=self.totalBill, state="readonly").grid(row=0, column=1, sticky="w", padx=5)
+        payment = tk.Label(totalFrame, text="Payment Type:")
+        payment.grid(row=0, column=2, sticky="w", padx=5)
+        ttk.Combobox(totalFrame, textvariable=self.paymentType, values=["Card", "Cash", "UPI"], state="readonly").grid(row=0, column=3)
+
+        orderButton = tk.Button(self.root, text="Order Now!", font="Arial 12", bg="green", fg="White", borderwidth=0, command=self.orderNow)
+        orderButton.pack(pady=5)
+
+        graphButton = tk.Button(self.root, text="View Sales Graph", font="Arial 12", bg="#FF34B3", fg="white", borderwidth=0, command=self.viewSalesGraph)
+        graphButton.pack(pady=5)
 
     def updatePrice(self, event=None):
         item = self.selectedItem.get()
